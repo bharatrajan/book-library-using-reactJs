@@ -1,5 +1,5 @@
 import React from 'react'
-import Book from './Book.js';
+import Book from './Book.jsx';
 import PropsTypes from 'prop-types'
 
 export default class BookSelf extends React.Component {
