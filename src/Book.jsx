@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import PropsTypes from 'prop-types'
+import React, { Component } from "react";
+import PropsTypes from "prop-types";
 
 class Book extends Component {
   /**
@@ -17,13 +17,13 @@ class Book extends Component {
   }
 
   //####### LOCAL PROPERTIES ###########
-  static PropsTypes={
-    bookdata : PropsTypes.object.isRequired
-  }
+  static PropsTypes = {
+    bookdata: PropsTypes.object.isRequired
+  };
 
-  state={
+  state = {
     selectStatus: "UNSELECTED"
-  }
+  };
 
   //############# HANDLERS #############
   /**
@@ -33,11 +33,11 @@ class Book extends Component {
   * @param {object} event - on change event from dropdown
   * @returns none
   */
-  onCatagoryChange = (event) => {
+  onCatagoryChange = event => {
     event.stopPropagation();
     event.preventDefault();
     this.props.onShelfChange(this.props.bookdata, event.target.value);
-  }
+  };
 
   /**
   * @description - Parent should set "isMultiSelectable" to true & send onSelect callback props
@@ -47,40 +47,41 @@ class Book extends Component {
   * @param {object} event - on click event from book
   * @returns none
   */
-  _handleOnClick = (event) => {
-    if(!this.props.isMultiSelectable) return;
+  _handleOnClick = event => {
+    if (!this.props.isMultiSelectable) return;
 
-    const newStatus = this.state.selectStatus === "SELECTED" ? "UNSELECTED" : "SELECTED";
+    const newStatus =
+      this.state.selectStatus === "SELECTED" ? "UNSELECTED" : "SELECTED";
     this.props.onSelect(this.props.bookdata, this.props.bookdata.id, newStatus);
-    this.setState({ selectStatus: newStatus});
-  }
+    this.setState({ selectStatus: newStatus });
+  };
 
   /**
   * @description: Template renderer
   * @param: None
   * @returns: None
   */
-  render(){
+  render() {
     //Storing bookdata into a contant
-    const {bookdata} = this.props;
+    const { bookdata } = this.props;
 
     //Prepare AuthorList
     let authorList = "";
-    if(bookdata &&
-       bookdata.authors &&
-       bookdata.authors.length &&
-       bookdata.authors.length > 0)
-       authorList = bookdata.authors.join(", ");
+    if (
+      bookdata &&
+      bookdata.authors &&
+      bookdata.authors.length &&
+      bookdata.authors.length > 0
+    )
+      authorList = bookdata.authors.join(", ");
 
     //Prepare Image Link
     let imageLink = "";
-    if(bookdata &&
-       bookdata.imageLinks &&
-       bookdata.imageLinks.thumbnail)
-       imageLink = `url('${bookdata.imageLinks.thumbnail}')`;
+    if (bookdata && bookdata.imageLinks && bookdata.imageLinks.thumbnail)
+      imageLink = `url('${bookdata.imageLinks.thumbnail}')`;
 
     //Template
-    return(
+    return (
       <div className="book" id={"book-" + bookdata.id}>
         <div className={`book-top ${this.state.selectStatus}`}>
           <div
@@ -91,10 +92,15 @@ class Book extends Component {
               height: 193,
               backgroundImage: imageLink
             }}
-           ></div>
+          />
           <div className="book-shelf-changer">
-            <select onChange={this.onCatagoryChange} defaultValue={bookdata.shelf || "none"}>
-              <option value="none" disabled>Move to...</option>
+            <select
+              onChange={this.onCatagoryChange}
+              defaultValue={bookdata.shelf || "none"}
+            >
+              <option value="none" disabled>
+                Move to...
+              </option>
               <option value="currentlyReading">Currently Reading</option>
               <option value="wantToRead">Want to Read</option>
               <option value="read">Read</option>
@@ -102,12 +108,15 @@ class Book extends Component {
             </select>
           </div>
         </div>
-        <div className="book-title">{bookdata.title || ""}</div>
-        <div className="book-authors">{authorList}</div>
+        <div className="book-title">
+          {bookdata.title || ""}
+        </div>
+        <div className="book-authors">
+          {authorList}
+        </div>
       </div>
-    )
+    );
   }
-
 }
 
 export default Book;

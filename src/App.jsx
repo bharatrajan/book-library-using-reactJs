@@ -1,20 +1,22 @@
-import React from 'react';
-import {Route, Link} from 'react-router-dom';
-import * as BooksAPI from './BooksAPI';
+import React from "react";
+import { Route, Link } from "react-router-dom";
+import * as BooksAPI from "./BooksAPI";
 
-import BookSelf from './BookSelf.jsx';
-import SearchView from './SearchView.jsx';
+import BookSelf from "./BookSelf.jsx";
+import SearchView from "./SearchView.jsx";
 
-import './App.css';
+import "./App.css";
 
 class BooksApp extends React.Component {
-
   //####### LOCAL PROPERTIES ###########
-  state = {
-    "responseStatus" : "", //Gets updated when server response
-    "currentlyReading" : [],
-    "wantToRead" : [],
-    "read" : []
+  constructor() {
+    super();
+    this.state = {
+      responseStatus: "", //Gets updated when server response
+      currentlyReading: [],
+      wantToRead: [],
+      read: []
+    };
   }
 
   //############## LIFE CYCLE ###########
@@ -25,7 +27,7 @@ class BooksApp extends React.Component {
   */
   componentDidMount = () => {
     this.getAllBooks();
-  }
+  };
 
   //############ SERVER CALLS ###########
   /**
@@ -35,7 +37,7 @@ class BooksApp extends React.Component {
   */
   getAllBooks = () => {
     BooksAPI.getAll().then(this.handleGetAllBooks);
-  }
+  };
 
   /**
   * @description - Changing shelf invokes this method &
@@ -46,16 +48,17 @@ class BooksApp extends React.Component {
   * @returns none
   */
   updateShelf = (book, newShelf) => {
-    if( book.shelf !== newShelf)
-      BooksAPI.update(book, newShelf).then((itemizedBookList) => {
-
+    if (book.shelf !== newShelf)
+      BooksAPI.update(book, newShelf).then(itemizedBookList => {
         //Update APP with new bookList
-        if(itemizedBookList.currentlyReading
-            && itemizedBookList.wantToRead
-              && itemizedBookList.read)
-                  this.getAllBooks();
+        if (
+          itemizedBookList.currentlyReading &&
+          itemizedBookList.wantToRead &&
+          itemizedBookList.read
+        )
+          this.getAllBooks();
       });
-  }
+  };
 
   //############## HANDLERS #############
   /**
@@ -63,33 +66,39 @@ class BooksApp extends React.Component {
   * @param: {object} response from getAllBook
   * @returns: null
   */
-  handleGetAllBooks = (bookList) => {
+  handleGetAllBooks = bookList => {
     //User dont have any book
-    if(bookList && typeof bookList.length === "number" && bookList.length === 0){
+    if (
+      bookList &&
+      typeof bookList.length === "number" &&
+      bookList.length === 0
+    ) {
       this.setState({
         responseStatus: "ZERO_BOOKS"
       });
-    }
-
-    //User have atleast 1 book
-    else if(bookList && typeof bookList.length === "number" && bookList.length !== 0){
+    } else if (
+      bookList &&
+      typeof bookList.length === "number" &&
+      bookList.length !== 0
+    ) {
+      //User have atleast 1 book
       this.responseStatus = "NON_ZERO_BOOKS";
       this.setState({
-        "responseStatus": "NON_ZERO_BOOKS",
-        "read" : bookList.filter((book) => book.shelf === "read"),
-        "wantToRead" : bookList.filter((book) => book.shelf === "wantToRead"),
-        "currentlyReading" : bookList.filter((book) => book.shelf === "currentlyReading")
+        responseStatus: "NON_ZERO_BOOKS",
+        read: bookList.filter(book => book.shelf === "read"),
+        wantToRead: bookList.filter(book => book.shelf === "wantToRead"),
+        currentlyReading: bookList.filter(
+          book => book.shelf === "currentlyReading"
+        )
       });
-    }
-
-    //Undesired AJAX response
-    else {
+    } else {
+      //Undesired AJAX response
       this.setState({
         responseStatus: "ERROR"
       });
     }
     return null;
-  }
+  };
 
   /**
   * @description: Template renderer
@@ -97,79 +106,80 @@ class BooksApp extends React.Component {
   * @returns: None
   */
   render() {
-    const {responseStatus, currentlyReading, wantToRead, read} = this.state;
+    const { responseStatus, currentlyReading, wantToRead, read } = this.state;
     return (
       <div className="app" id="mainApp">
-
-        <Route path="/" exact render={(history) => (
-
-          <div className="list-books">
-            <div className="list-books-title">
-              <h1>LIBRARY</h1>
-            </div>
-            <div className="list-books-content">
-                { //this.responseStatus is empty string before AJAX response
-                  (responseStatus === "") &&
+        <Route
+          path="/"
+          exact
+          render={history =>
+            <div className="list-books">
+              <div className="list-books-title">
+                <h1>LIBRARY</h1>
+              </div>
+              <div className="list-books-content">
+                {//this.responseStatus is empty string before AJAX response
+                responseStatus === "" &&
                   <div className="loading-text" name="errorScenario">
-                      <span>Loading ...</span>
-                  </div>
-                }
+                    <span>Loading ...</span>
+                  </div>}
 
-                { //AJAX responded non-0 books returned
-                  (responseStatus === "NON_ZERO_BOOKS") &&
+                {//AJAX responded non-0 books returned
+                responseStatus === "NON_ZERO_BOOKS" &&
                   <div>
-                      <BookSelf
-                        id="currentlyReadingBookSelf"
-                        shelfTitle="Currently Reading"
-                        onShelfChange={this.updateShelf}
-                        bookList={currentlyReading} />
-                      <BookSelf
-                        id="wantToReadBookSelf"
-                        shelfTitle="Want to Read"
-                        onShelfChange={this.updateShelf}
-                        bookList={wantToRead} />
-                      <BookSelf
-                        id="readBookSelf"
-                        shelfTitle="Read"
-                        onShelfChange={this.updateShelf}
-                        bookList={read} />
-                  </div>
-                }
+                    <BookSelf
+                      id="currentlyReadingBookSelf"
+                      shelfTitle="Currently Reading"
+                      onShelfChange={this.updateShelf}
+                      bookList={currentlyReading}
+                    />
+                    <BookSelf
+                      id="wantToReadBookSelf"
+                      shelfTitle="Want to Read"
+                      onShelfChange={this.updateShelf}
+                      bookList={wantToRead}
+                    />
+                    <BookSelf
+                      id="readBookSelf"
+                      shelfTitle="Read"
+                      onShelfChange={this.updateShelf}
+                      bookList={read}
+                    />
+                  </div>}
 
-                { //AJAX responded 0 books returned
-                  (responseStatus === "ZERO_BOOKS") &&
+                {//AJAX responded 0 books returned
+                responseStatus === "ZERO_BOOKS" &&
                   <div className="no-books-found" name="errorScenario">
-                      <span>You have no books</span>
-                      <span>Please add a book. Reading is good!</span>
-                  </div>
-                }
+                    <span>You have no books</span>
+                    <span>Please add a book. Reading is good!</span>
+                  </div>}
 
-                { //AJAX responded 0 books returned
-                  (responseStatus === "ERROR") &&
+                {//AJAX responded 0 books returned
+                responseStatus === "ERROR" &&
                   <div className="error-view" name="errorScenario">
-                      <span>Something went wrong</span>
-                      <span>Please check again later</span>
-                  </div>
-                }
+                    <span>Something went wrong</span>
+                    <span>Please check again later</span>
+                  </div>}
+              </div>
+              <div className="open-search">
+                <Link to="/search">Add a book</Link>
+              </div>
+            </div>}
+        />
 
-            </div>
-            <div className="open-search">
-              <Link to="/search">Add a book</Link>
-            </div>
-          </div>
-
-        )} />
-
-        <Route path="/search" exact render={(windowCtx) => (
-          <SearchView
-            updateShelf={(book, newShelf) => {
-              this.updateShelf(book, newShelf);
-              windowCtx.history.push("/");
-            }}/>
-        )} />
-
+        <Route
+          path="/search"
+          exact
+          render={windowCtx =>
+            <SearchView
+              updateShelf={(book, newShelf) => {
+                this.updateShelf(book, newShelf);
+                windowCtx.history.push("/");
+              }}
+            />}
+        />
       </div>
-    )
+    );
   }
 }
 
