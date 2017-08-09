@@ -1,0 +1,6 @@
+---
+applications:
+ - name: bharatReactLibrary
+   random-route: true
+   memory: 128M
+
