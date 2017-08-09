@@ -1,9 +1,4 @@
-//Use this during dev
-let api = "https://reactnd-books-api.udacity.com";
-
-if(location.hostname !== "localhost")
-   api = "/api"; //For deployment
-
+const api = "https://reactnd-books-api.udacity.com"
 
 // Generate a unique token for storing your bookshelf data on the backend server.
 let token = localStorage.token
