@@ -2,8 +2,8 @@ import React from 'react';
 import {Route, Link} from 'react-router-dom';
 import * as BooksAPI from './BooksAPI';
 
-import BookSelf from './BookSelf.js';
-import SearchView from './SearchView.js';
+import BookSelf from './BookSelf.jsx';
+import SearchView from './SearchView.jsx';
 
 import './App.css';
 
