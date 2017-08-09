@@ -25,9 +25,7 @@
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
-    "react-router-dom": "^4.1.2",
-    "react-scripts": "^0.9.5",
-    "serve": "^6.0.6"
+    "react-router-dom": "^4.1.2"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",
