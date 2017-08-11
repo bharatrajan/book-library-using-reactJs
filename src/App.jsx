@@ -6,6 +6,7 @@ import BookSelf from './BookSelf.jsx';
 import SearchView from './SearchView.jsx';
 
 import './App.css';
+import './fonts.css';
 
 class BooksApp extends React.Component {
 
