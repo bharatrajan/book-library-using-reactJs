@@ -1,0 +1,249 @@
+$primary-bg-color:#EBEEF0
+$secondary-bg-color:#0272B6
+$search-bar-color:#EEE
+$list-header:#000
+$book-shelf-underline:#DEDEDE
+$book-authors-font-color:#999
+$bulk-update-font-color:#FFF
+$book-cover-bg-color:#EEE
+
+=displayFlex()
+  display: -webkit-flex
+  display: -ms-flex
+  display: flex
+=displayFlexBox()
+  display: -webkit-box
+  display: -ms-flexbox
+  display: flex
+=userSelect($selectVal)
+  -webkit-touch-callout: $selectVal
+  -webkit-user-select: $selectVal
+  -khtml-user-select: $selectVal
+  -moz-user-select: $selectVal
+  -ms-user-select: $selectVal
+  user-select: $selectVal
+=justifyContent($jcVal)
+  justify-content: $jcVal
+  -webkit-justify-content: $jcVal
+  -ms-justify-content: $jcVal
+=alignItems($aiVal)
+  align-items: $aiVal
+  -webkit-align-items: $aiVal
+  -ms-align-items: $aiVal
+=backgroundImage($imgURL)
+  background-image: url($imgURL)
+  background-repeat: no-repeat
+  background-position: center
+
+html, body, .root
+  height: 100%
+
+body
+  background-color: $primary-bg-color !important
+  font-family: Raleway !important
+  line-height: 1.5
+
+/* main page
+
+.loading-text
+  font-size: 20px
+  padding-top: 50%
+  text-align: center
+
+.error-view, .no-books-found
+  display: grid
+  padding-top: 100px
+  text-align: center
+  font-size: 25px
+
+.list-books
+  background-color: $primary-bg-color
+
+.list-books-title
+  padding: 10px 0
+  background: $list-header
+  text-align: center
+  font-family: RalewayEL
+  h1
+    font-weight: 400
+    margin: 0
+    color: white
+
+.list-books-content
+  background-color: $primary-bg-color
+  padding: 0 0 80px
+  flex: 1
+
+.bookshelf
+  padding: 0 10px 20px
+
+.bookshelf-title
+  font-family: RalewayEL
+  border-bottom: 1px solid $book-shelf-underline
+
+@media (min-width: 600px)
+  .bookshelf
+    padding: 0 20px 40px
+
+.bookshelf-books
+  text-align: center
+
+.open-search
+  position: fixed
+  right: 25px
+  bottom: 25px
+  a
+    display: block
+    width: 50px
+    height: 50px
+    border-radius: 50%
+    background: $secondary-bg-color
+    +backgroundImage('./icons/add.svg')
+    background-size: 28px
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)
+    font-size: 0
+
+/* search page
+
+.search-suggestions
+  padding: 100px 25px
+  color: rgba(128, 128, 128, 0.65)
+
+.bulk-update
+  min-width: 78px
+  padding-top: 65px
+  +displayFlex
+  justify-content: space-around
+  text-align: center
+  color: $bulk-update-font-color
+  position: fixed
+  z-index: 1
+  width: 100%
+  background: $primary-bg-color
+
+.bulk-update-option
+  font-family: RalewayEL
+  display: grid
+  +userSelect(none)
+  cursor: pointer
+  width: 33.33%
+  border-radius: 10px
+  background-color: $secondary-bg-color
+  padding: 20px 0px
+  margin: 5px
+  font-size: 20px
+
+.add-to
+  font-family: Raleway
+  font-size: 12.5px
+  font-weight: bolder
+
+.bulk-update-option:active
+  opacity: 0.8
+
+.search-books-bar
+  position: fixed
+  width: 100%
+  top: 0
+  left: 0
+  z-index: 5
+  +displayFlex
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 0 6px rgba(0, 0, 0, 0.23)
+
+.search-books-input-wrapper
+  flex: 1
+  background: $search-bar-color
+  font-family: RalewayEL !important
+
+.search-books-bar input
+  width: 100%
+  padding: 15px 10px
+  font-size: 1.25em
+  border: none
+  outline: none
+
+.close-search
+  display: block
+  top: 20px
+  left: 15px
+  width: 50px
+  height: 53px
+  background: white
+  +backgroundImage('./icons/arrow-back.svg')
+  background-size: 28px
+  font-size: 0
+
+.search-books-results
+  background-color: $primary-bg-color
+  padding: 200px 10px 20px
+
+.align-center
+  +displayFlex
+  +justifyContent(center)
+  +alignItems(center)
+
+/* books grid
+
+.books-grid
+  list-style-type: none
+  padding: 0
+  margin: 0
+  +displayFlex
+  +justifyContent(center)
+  flex-wrap: wrap
+  li
+    padding: 10px 15px
+    text-align: left
+
+.book
+  width: 140px
+
+.book-title, .book-authors
+  font-size: 0.8em
+
+.book-title
+  font-weight: bold
+  margin-top: 10px
+
+.book-authors
+  color: $book-authors-font-color
+
+.book-top
+  &.SELECTED
+    border-radius: 6px
+    background-color: $secondary-bg-color
+  position: relative
+  height: 204px
+  +displayFlexBox
+  -webkit-box-align: end
+  -ms-flex-align: end
+  +justifyContent(center)
+  +alignItems(center)
+
+.book-shelf-changer
+  position: absolute
+  right: 0
+  bottom: -10px
+  width: 40px
+  height: 40px
+  border-radius: 50%
+  background: rgba(2, 114, 182, 0.85)
+  +backgroundImage('./icons/arrow-drop-down.svg')
+  background-size: 20px
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)
+  select
+    width: 100%
+    height: 100%
+    opacity: 0
+    cursor: pointer
+
+/* book cover
+
+.book-cover
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)
+  background: $book-cover-bg-color
+
+.book-cover-title
+  padding: 20px 10px 0
+  text-align: center
+  font-size: 0.8em
