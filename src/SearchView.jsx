@@ -23,6 +23,30 @@ class SearchView extends Component {
                        "Science Fiction, Shakespeare, Singh, Swimming, Tale, Thrun, Time, Tolstoy, " +
                        "Travel, Ultimate, Virtual Reality, Web Development, iOS";
 
+
+ //############ VALIDATION ###########
+ /**
+  * @description - Takes bookList and check for null
+  * @description - If Empty, throws an alert message
+  * @validation
+  * @param {object} selectedBookList - List of books selected for bulk update
+  * @returns boolean isEmpty or not
+  */
+ isSelectedBookListEmpty = (selectedBookList) => {
+   let isEmpty = true;
+   //check for Empty object
+   for(let bookId in selectedBookList)
+     if(typeof selectedBookList[bookId] !== "undefined"){
+        isEmpty = false;
+        break;
+     }
+
+   //throws alertbox
+   if(isEmpty) alert("Please select at least 1 book");
+
+   return isEmpty;
+ }
+
   //############ SERVER CALLS ###########
   /**
   * @description - Search for backend w/ query="event.target.value"
@@ -48,13 +72,11 @@ class SearchView extends Component {
   * @returns none
   */
   _moveSelectedBooksTo = (newShelf) => {
-    var selectedBookIdArr = Object.keys(this.state.selectedBookList);
-    if( selectedBookIdArr.length !== 0 ){
+    if(this.isSelectedBookListEmpty(this.state.selectedBookList)) return null;
+
+    let selectedBookIdArr = Object.keys(this.state.selectedBookList);
         selectedBookIdArr.forEach((bookId) =>
               this.props.updateShelf(this.state.selectedBookList[bookId], newShelf));
-    }else {
-      alert("Please select atleast 1 book");
-    }
   }
 
   /**

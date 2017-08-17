@@ -47,7 +47,7 @@ class BooksApp extends React.Component {
   * @returns none
   */
   updateShelf = (book, newShelf) => {
-    if( book.shelf !== newShelf)
+    if( book && book.shelf !== newShelf)
       BooksAPI.update(book, newShelf).then((itemizedBookList) => {
 
         //Update APP with new bookList
