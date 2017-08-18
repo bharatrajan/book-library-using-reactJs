@@ -1,20 +1,48 @@
+//@description : Background color for all over the app
 $primary-bg-color:#EBEEF0
+
+//@description : Background color for fewer elements
 $secondary-bg-color:#0272B6
+
+//@description : Font color for search bar text
 $search-bar-color:#EEE
+
+//@description : Font color for list header
 $list-header:#000
+
+//@description : Underline color for book shelf
 $book-shelf-underline:#DEDEDE
+
+//@description : Font color for book authours text
 $book-authors-font-color:#999
+
+//@description : Font color for bulk update tile's text
 $bulk-update-font-color:#FFF
+
+//@description : Background color for book cover
+//@description : Although its not used properly
 $book-cover-bg-color:#EEE
 
+
+//@mixin
+//@description : Makes webkit, moz & ms equivalent of "display:flex;"
+//@params : none
 =displayFlex()
   display: -webkit-flex
   display: -ms-flex
   display: flex
+
+//@mixin
+//@description : Makes webkit, moz & ms equivalent of "flexbox;"
+//@params : none
 =displayFlexBox()
   display: -webkit-box
   display: -ms-flexbox
   display: flex
+
+//@mixin
+//@description : Makes webkit, moz & ms equivalent of "user-select"
+//@params : $selectVal - A proper value for "user-select" property
 =userSelect($selectVal)
   -webkit-touch-callout: $selectVal
   -webkit-user-select: $selectVal
@@ -22,43 +50,63 @@ $book-cover-bg-color:#EEE
   -moz-user-select: $selectVal
   -ms-user-select: $selectVal
   user-select: $selectVal
+
+//@mixin
+//@description : Makes webkit, moz & ms equivalent of "justify-content"
+//@params : jcVal - A proper value for "justify-content" property
 =justifyContent($jcVal)
   justify-content: $jcVal
   -webkit-justify-content: $jcVal
   -ms-justify-content: $jcVal
+
+//@mixin
+//@description : Makes webkit, moz & ms equivalent of "align-items"
+//@params : jcVal - A proper value for "align-items" property
 =alignItems($aiVal)
   align-items: $aiVal
   -webkit-align-items: $aiVal
   -ms-align-items: $aiVal
+
+//@mixin
+//@description : Sets background-image without repeat and centered
+//@params : imgURL - URL of image.
 =backgroundImage($imgURL)
   background-image: url($imgURL)
   background-repeat: no-repeat
   background-position: center
 
+//@tag
+//@description : As body holds 2 view components, maximise height.
 html, body, .root
   height: 100%
 
+//@tag
+//@description : Sets global BG color & font styles
+/* Main content */
 body
   background-color: $primary-bg-color !important
   font-family: Raleway !important
   line-height: 1.5
 
-/* main page
-
+/* Book list view */
+/* Loading state styles */
 .loading-text
   font-size: 20px
   padding-top: 50%
   text-align: center
 
+/* Error state styles */
 .error-view, .no-books-found
   display: grid
   padding-top: 100px
   text-align: center
   font-size: 25px
 
+/* Success state styles */
 .list-books
   background-color: $primary-bg-color
 
+/* Success state - book title */
 .list-books-title
   padding: 10px 0
   background: $list-header
@@ -74,9 +122,11 @@ body
   padding: 0 0 80px
   flex: 1
 
+/* Success state - book shelf */
 .bookshelf
   padding: 0 10px 20px
 
+/* Success state - book shelf's title */
 .bookshelf-title
   font-family: RalewayEL
   border-bottom: 1px solid $book-shelf-underline
@@ -85,9 +135,11 @@ body
   .bookshelf
     padding: 0 20px 40px
 
+/* Success state - books in book shelf */
 .bookshelf-books
   text-align: center
 
+/* Book search view */
 .open-search
   position: fixed
   right: 25px
@@ -103,12 +155,11 @@ body
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)
     font-size: 0
 
-/* search page
-
 .search-suggestions
   padding: 100px 25px
   color: rgba(128, 128, 128, 0.65)
 
+/* For 3 bulk update tile */
 .bulk-update
   min-width: 78px
   padding-top: 65px
@@ -121,6 +172,7 @@ body
   width: 100%
   background: $primary-bg-color
 
+/* Content of bulk update tile */
 .bulk-update-option
   font-family: RalewayEL
   display: grid
@@ -141,6 +193,7 @@ body
 .bulk-update-option:active
   opacity: 0.8
 
+/* Search bar */
 .search-books-bar
   position: fixed
   width: 100%
@@ -183,7 +236,6 @@ body
   +alignItems(center)
 
 /* books grid
-
 .books-grid
   list-style-type: none
   padding: 0
