@@ -36,6 +36,17 @@ class Book extends Component {
   onCatagoryChange = (event) => {
     event.stopPropagation();
     event.preventDefault();
+
+    //Fires BookAdded event to GA.
+    window.ga('send', {
+      hitType: 'event',
+      eventCategory: 'Change',
+      eventAction: 'BookShelfChanged',
+      fieldsObject: {
+        "shelf": event.target.value
+      }
+    });
+
     this.props.onShelfChange(this.props.bookdata, event.target.value);
   }
 

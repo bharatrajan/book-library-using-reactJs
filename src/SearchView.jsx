@@ -56,6 +56,16 @@ class SearchView extends Component {
   * @returns none
   */
   searchBookAJAX = (event) => {
+    //Firing book search event
+    window.ga('send', {
+      hitType: 'event',
+      eventCategory: 'Search',
+      eventAction: 'BookSearch',
+      fieldsObject: {
+        "searchWord": event.target.value
+      }
+    });
+
     BooksAPI.search(event.target.value, 1000).then((bookList) => {
         (bookList &&
          bookList.length &&
@@ -73,6 +83,16 @@ class SearchView extends Component {
   */
   _moveSelectedBooksTo = (newShelf) => {
     if(this.isSelectedBookListEmpty(this.state.selectedBookList)) return null;
+
+    //Sending analytics info
+    window.ga('send', {
+      hitType: 'event',
+      eventCategory: 'Addition',
+      eventAction: 'BulkBooksAdded',
+      fieldsObject: {
+        "shelf": newShelf
+      }
+    });
 
     let selectedBookIdArr = Object.keys(this.state.selectedBookList);
         selectedBookIdArr.forEach((bookId) =>
@@ -131,10 +151,21 @@ class SearchView extends Component {
 
   /**
   * @description: Template renderer
+  * @description: Fires pageview event to GA
   * @param: None
-  * @returns: None
+  * @returns: UI template
   */
   render(){
+    //Fires pageview event to GA
+    //Sets isSearchViewed to true
+    if(!window.webAnalytics.isSearchViewed){
+      window.ga('send', {
+        hitType: 'pageview',
+        page: '/search'
+      });
+      window.webAnalytics.isSearchViewed = true;
+    }
+
     //Storing data locally
     const {bookList} = this.state;
 
